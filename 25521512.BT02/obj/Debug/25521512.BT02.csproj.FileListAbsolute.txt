@@ -1,0 +1,15 @@
+C:\Users\ADMIN\OneDrive\Documents\WPF Basic VSC\25521512.BT02\25521512.BT02\bin\Debug\25521512.BT02.exe.config
+C:\Users\ADMIN\OneDrive\Documents\WPF Basic VSC\25521512.BT02\25521512.BT02\bin\Debug\25521512.BT02.exe
+C:\Users\ADMIN\OneDrive\Documents\WPF Basic VSC\25521512.BT02\25521512.BT02\bin\Debug\25521512.BT02.pdb
+C:\Users\ADMIN\OneDrive\Documents\WPF Basic VSC\25521512.BT02\25521512.BT02\obj\Debug\25521512.BT02.csproj.AssemblyReference.cache
+C:\Users\ADMIN\OneDrive\Documents\WPF Basic VSC\25521512.BT02\25521512.BT02\obj\Debug\MainWindow.g.cs
+C:\Users\ADMIN\OneDrive\Documents\WPF Basic VSC\25521512.BT02\25521512.BT02\obj\Debug\App.g.cs
+C:\Users\ADMIN\OneDrive\Documents\WPF Basic VSC\25521512.BT02\25521512.BT02\obj\Debug\25521512.BT02_MarkupCompile.cache
+C:\Users\ADMIN\OneDrive\Documents\WPF Basic VSC\25521512.BT02\25521512.BT02\obj\Debug\25521512.BT02_MarkupCompile.lref
+C:\Users\ADMIN\OneDrive\Documents\WPF Basic VSC\25521512.BT02\25521512.BT02\obj\Debug\MainWindow.baml
+C:\Users\ADMIN\OneDrive\Documents\WPF Basic VSC\25521512.BT02\25521512.BT02\obj\Debug\25521512.BT02.g.resources
+C:\Users\ADMIN\OneDrive\Documents\WPF Basic VSC\25521512.BT02\25521512.BT02\obj\Debug\_25521512.BT02.Properties.Resources.resources
+C:\Users\ADMIN\OneDrive\Documents\WPF Basic VSC\25521512.BT02\25521512.BT02\obj\Debug\25521512.BT02.csproj.GenerateResource.cache
+C:\Users\ADMIN\OneDrive\Documents\WPF Basic VSC\25521512.BT02\25521512.BT02\obj\Debug\25521512.BT02.csproj.CoreCompileInputs.cache
+C:\Users\ADMIN\OneDrive\Documents\WPF Basic VSC\25521512.BT02\25521512.BT02\obj\Debug\25521512.BT02.exe
+C:\Users\ADMIN\OneDrive\Documents\WPF Basic VSC\25521512.BT02\25521512.BT02\obj\Debug\25521512.BT02.pdb

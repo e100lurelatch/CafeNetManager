@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 18
+VisualStudioVersion = 18.11.12328.437
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Admin_123456", "Admin_123456\Admin_123456.csproj", "{EDB3EB8E-544C-4DED-BAC2-6986C42A85AB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "25521512.BT02", "25521512.BT02\25521512.BT02.csproj", "{FAB900A3-5DE9-437A-B44F-B3BC8EC11CE6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FAB900A3-5DE9-437A-B44F-B3BC8EC11CE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAB900A3-5DE9-437A-B44F-B3BC8EC11CE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAB900A3-5DE9-437A-B44F-B3BC8EC11CE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAB900A3-5DE9-437A-B44F-B3BC8EC11CE6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDB3EB8E-544C-4DED-BAC2-6986C42A85AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDB3EB8E-544C-4DED-BAC2-6986C42A85AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDB3EB8E-544C-4DED-BAC2-6986C42A85AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDB3EB8E-544C-4DED-BAC2-6986C42A85AB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
