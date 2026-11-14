@@ -1,14 +1,17 @@
-# 📘 HƯỚNG DẪN ĐỒNG BỘ CODE & QUY ƯỚC DỰ ÁN (Tài liệu demo nội )
+# 📘 HƯỚNG DẪN ĐỒNG BỘ CODE & QUY ƯỚC DỰ ÁN (Tài liệu demo nội bộ) - Mem cần sửa gì, thiếu chỗ nào trực quan thì cứ sửa. 
 
-File này mô tả Framework trong quá trình làm code. Khi hoàn thành dự án, xóa file này đi trước khi nộp.
+File này mô tả nội dung mục tiêu + Framework trong quá trình làm code. Khi hoàn thành dự án, xóa file này đi trước khi nộp.
 -----------------
+
+📌 HOW TO BASIC (TL;DR)
 
 Để một ứng dụng (bất kể là app máy tính, app điện thoại hay trang web) có thể hoạt động được, nó luôn bắt buộc phải là sự kết hợp khép kín của 3 chiếc kiềng ba chân này:
 
  [ 1. UI/UX ] ─── (Tương tác) ───> [ 2. Logic (C#) ] ─── (Lưu trữ) ───> [ 3. SQL / Database ]
   (Giao diện)                       (Bộ não xử lý)                     (Kho chứa dữ liệu)
 
---->
+---> • Đảm bảo các luồng xử lý dữ liệu chính (kết nối CSDL, các chức năng quản lý trọng tâm) phải chạy hoàn hảo trước khi nghĩ đến các tính năng nâng cao (Tối thiểu).
+
 
 
 ## 1. Quy trình làm việc với Git hàng ngày (Tránh bị đè code)
@@ -39,13 +42,13 @@ File này mô tả Framework trong quá trình làm code. Khi hoàn thành dự 
     ┃
     ┣ 📁 Views  <--- 🟢 Định tạo giao diện (.xaml) thì chèn vào đây
     ┃  ┣ 📄 LoginView.xaml
-    ┃  ┣ 📄 NhanVienView.xaml  (Khánh tạo)
-    ┃  ┗ 📄 BanAnView.xaml    (Tài tạo)
+    ┃  ┣ 📄 NhanVienView.xaml  (ex: A tạo)
+    ┃  ┗ 📄 BanAnView.xaml    (ex: B tạo)
     ┃
     ┣ 📁 ViewModels  <--- 🟢 File xử lý logic (.cs) đi kèm giao diện thì chèn vào đây
     ┃  ┣ 📄 LoginViewModel.cs
-    ┃  ┣ 📄 NhanVienViewModel.cs (Khánh viết)
-    ┃  ┗ 📄 BanAnViewModel.cs   (Tài viết)
+    ┃  ┣ 📄 NhanVienViewModel.cs (ex: A viết)
+    ┃  ┗ 📄 BanAnViewModel.cs   (ex: B viết)
     ┃
     ┣ 📁 Models  <--- 🟢 Các file định nghĩa cấu trúc dữ liệu thì chèn vào đây
     ┃  ┣ 📄 DoUong.cs
@@ -69,7 +72,7 @@ Cách "Script Table" trong SSMS (Dành cho người vừa sửa Database)
 Khi bất kỳ ai trong nhóm thêm bảng mới hoặc sửa cột, người đó phải làm việc này trước khi push code:
 1. Mở phần mềm SQL Server Management Studio (SSMS) lên.
 2. Tìm đến cái bảng mình vừa tạo mới ở cột bên trái (Ví dụ bảng NHANVIEN).
-3. Click chuột phải vào cái bảng đó.
+3. Click chuột phải vào cái bảng đó
 4. Di chuột chọn dòng Script Table as ➡️ Chọn tiếp CREATE To ➡️ Chọn New Query Editor Window (hoặc File... để lưu thẳng thành file).
 5. Một trang toàn chữ lệnh SQL hiện ra (Dạng: CREATE TABLE NHANVIEN (...)). Các bạn lưu file này lại với đuôi là .sql (Ví dụ: update_ban_nhanvien.sql) rồi ném file này vào thư mục dự án trên GitHub.
 
@@ -83,32 +86,66 @@ Khi bạn thấy trên GitHub xuất hiện file update_ban_nhanvien.sql mới d
 3. Bấm nút Execute (hình tam giác màu xanh lá cây hoặc ấn phím F5).
 4. Ngay lập tức, SQL Server máy sẽ tự động sinh ra bảng NHANVIEN giống y hệt máy của người vừa sửa mà không cần phải tự tay gõ từng cột nữa.
 
-NÓI CHUNG: Cả nhóm dùng chung duy nhất một file tên là CafeNetManager.sql đặt trên GitHub. Ai thêm bảng gì thì cứ mở file đó ra, dán đoạn code CREATE TABLE mới của mình xuống cuối file rồi lưu lại là xong!
+NÓI CHUNG: Cả nhóm dùng chung duy nhất một file tên là CafeNetManager.sql đặt trên GitHub. Ai thêm bảng gì thì cứ mở file đó ra, dán đoạn code CREATE TABLE mới của mình xuống cuối file rồi lưu lại là ngon luôn!
 
-++++ Nguồn tài liệu nếu cần cập nhật thêm skill để tăng tiến độ Project  ++++: 
-  Google AI Plus 
-  https://www.youtube.com/watch?v=iJp10C27Fmg (ngoctienTNT) 2:29:19-3:12:46 (Ex demo*).
-  ...
-------->>
-  UIT course --- đang học
+
+## 📚 4. Cập nhật tiến độ trong file Nhat_Ky
+
+
+--- 📌 DONE HOW TO BASICS 📌--- 
+
+
+++++ Nguồn tài liệu nếu cần cập nhật thêm skill để tăng tiến độ Project (Edit public source)  ++++: 
+  - Google AI Plus 
+  - https://www.youtube.com/watch?v=iJp10C27Fmg (ngoctienTNT) 2:29:19-3:12:46 (Ex demo*). Brainstorming phát triển thêm.
+  - ...
+
+------->> More current info:
+
+  UIT course --- live
   Buổi 9: Đồ họa 2D
 
-  Tổng quan về đồ họa trong WPF
+  *Tổng quan về đồ họa trong WPF
   Vẽ các hình cơ bản
   Các chổi tô (Brushes)
-  Các phép biến đổi hình học (Transforms)
+  Các phép biến đổi hình học (Transforms)*
+
 ------->>
-  Date limit exceeds (25/12/2026) remaining times ! 42 days
-------->>
-  Thông điệp về lợi ích và cách phối hợp hiệu quả:
-* Mọi người tự chủ động sắp xếp thời gian code theo lịch học cá nhân.
-* Nếu vướng ở đoạn code UI, SQL hay logic nào quá 1,2 ngày mà khó giải quyết được, hãy nhắn lên nhóm để mọi người hỗ trợ code chung (Pair programming), đừng bỏ dở nó phí tg chần chừ + ideas.
-* Cố gắng duy trì việc cập nhật code (`Pull` và `Push`) đều đặn mỗi tuần để cả nhóm biết dự án vẫn đang tiến triển tốt đẹp.
-* Recommend không thêm deadline, nếu mọi người cảm thấy chậm progress thì nên đề xuất linh hoạt meet On/Off nếu cần thiết (buff).
-  
-Đây là một trong những môn đặc thù liên quan tới kĩ nănng phần mềm (Độ khó 3.5 / 5 ⭐) (Mức độ: Skill thực chiến, ráp nối hệ thống).
-  * (CV/Portfolio): Có sản phẩm thực tế. Phần mềm Quản lý Cà phê này chính là thứ đầu tiên chúng ta có thể tự hào viết vào CV và bật demo.
+  Date limit exceeds (dự kiến 25/12/2026) Estimated remaining times ! 42 days 🟧 
+
+------->> Elite members (BUFF)
+
+  Shorts về lợi ích và cách phối hợp hiệu quả:
+* Members chắc chắn phải chủ động sắp xếp thời gian code theo lịch học một cách sao cho cả hai đạt hiệu quả cao nhất. ⚔️ 
+* Nếu vướng ở đoạn code UI, SQL hay logic nào quá 1,2 ngày mà khó giải quyết được, có thể hỏi lên nhóm để mọi người hỗ trợ code chung (Pair programming), đừng bỏ dở phí TG chần chừ. 
+* Cố gắng duy trì việc cập nhật code (`Pull` và `Push`) đều đặn mỗi tuần để biết dự án vẫn đang tiến triển tốt đẹp. ⚔️ 
+* Recommend không thêm deadline trong khoảng thời gian vài tuần đầu tiên, tập trung hoàn thành theo việc phân chia các tính năng và bề ngoài cốt lõi, đề cao quản lý khối lượng công việc (Scope) và giao tiếp trong nhóm, đề xuất linh hoạt meet On/Off cần thiết. ⚔️ 
+
+--> Cơ bản do tính chất đặc thù của mục tiêu nên vai trò teamwork trong môn này có sự khác biệt khá lớn so với teamwork trong những môn như SS004 hay SE005/ 
+
+
+------->> Cái YES của giảng viên (50%): Demo sản phầm, và hình như nghe bảo không phải làm file báo cáo.
++ Đánh giá sản phẩm qua DanhGiaDoAnIT008.PDF.
++ Giảng viên đánh giá: Võ Tuấn Kiệt 👑 Top BXH Everytime app.
++ Bình Tĩnh, Tự Tin và Chiến Thắng. 
+
+------->> Problems có thể gặp 🔥:
+S+ Chưa đủ kiến thức để bắt đầu thực hành, cụ thể môn này là sự phối hợp các kiến thức trong CSDL, LTTQ và OOP -> Vừa tự mày mò và tìm hiểu.  
+A+ Top những cái ca chết lâm sàn: Đang Demo lòi ra Bug trước mặt thầy -> Thành phẩm cuối cùng phải test ngóc ngách mọi logic có thể xảy ra.
+B+ Một số tính năng trong sản phẩm chưa được mọi thành viên hiểu hết (VD: Khi thuyết trình demo tự nhiên ko biết cái Button này của ai, có vai trò gì)
+---> Quan trọng là giao tiếp trong nhóm + trong Framework, tìm điểm mù qua kinh nghiệm làm project chung.
+------------
+
+💡 Đây là một trong những môn đặc thù liên quan tới kĩ nănng phần mềm (Đánh giá độ khó 3.5 / 5 ⭐, vừa sức nhưng nếu lơ là quá mức sẽ thành -> "game cho chó chơi à") (Mức độ: Skill thực tiễn gần gũi, tính ráp nối hệ thống cao).
+  * (CV/Portfolio): Có sản phẩm thực tế. Phần mềm Quản lý Cà phê này chính là thứ đầu tiển có thể viết vào CV và bật demo.
   * Làm quen với kiến trúc chuẩn doanh nghiệp (MVVM):
   * Trải nghiệm làm việc nhóm thực tế (Git/GitHub):** Đi làm ở bất kỳ công ty phần mềm nào, kỹ năng phối hợp code qua Git mà không làm mất bài của nhau là bắt buộc 100%. 
-  * Nếu project nỏi bật có khả năng đứng top GPA môn học (50%).
-  
+  * Project nổi bật có khả năng đứng top GPA môn học (50%). Elite bonus: Self-advertise trước lớp.
+
+Project này chính là mảnh ghép khá mạnh của Elite Members trong môi trường UIT, ko còn xa lạ gì --> easy game.
+
+From Local member: 
+Quân Anh KTPM2025.3
+
+Promaster Quote (Public Edit):
+*Akame him: "This shit is the most easiest thing I've ever experienced"*
