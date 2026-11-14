@@ -1,0 +1,33 @@
+## 🏗️ Demo Phân Chia Công Việc Theo Khung Cốt Lõi Dự Án
+
+Dự án được chia làm 4 khối nghiệp vụ độc lập. Mỗi thành viên chịu trách nhiệm TRỌN GÓI cụm của mình (Vẽ UI theo + Thiết kế bảng SQL + Viết code C# kết nối).
+
+### 1. Quân — Khối 01: Nền Móng Hệ Thống & Quản Lý Thực Đơn
+* **Vai trò chính:** Quản trị cấu trúc dự án (Xây khung MVVM, kết nối file `App.config`, viết lớp `DataProvider.cs` dùng chung để cả nhóm gọi lệnh xuống SQL Server).
+* **Tính năng phụ trách:** 
+  * Giao diện & Logic Đăng nhập (Login/Logout) + Phân quyền tài khoản (Admin/Nhân viên).
+  * Khung bảng điều khiển chính (Main Dashboard / Navigation Menu).
+  * Cụm Quản lý Món ăn / Thực đơn (Thêm, sửa, xóa món, đặt giá tiền, phân loại đồ uống).
+  * Cụm Quản lý Nguồn hàng / Kho (Nhập kho nguyên liệu, theo dõi tồn kho).
+
+### 2. Dương — Khối 02: Nghiệp Vụ Phòng Bàn & Gọi Món (Core chính)
+* **Vai trò chính:** Xử lý luồng vận hành trực quan tại quán.
+* **Tính năng phụ trách:**
+  * Sơ đồ phòng bàn động (Hiển thị danh sách bàn, tự động đổi màu theo trạng thái: Bàn trống, Bàn đang có khách, Bàn đặt trước).
+  * Giao diện Gọi món (Order): Khi click vào một bàn ➡️ Hiện danh sách món ➡️ Cho phép chọn món, tăng giảm số lượng, thêm ghi chú (Topping/đá/đường).
+  * Logic nghiệp vụ bàn: Chuyển bàn (Đổi từ bàn A sang bàn B), Tách/Gộp hóa đơn của nhiều bàn lại với nhau.
+
+## 3. Anh — Khối 03: Thanh Toán, Doanh Thu & Nhân Sự
+* **Vai trò chính:** Xử lý dòng tiền và con người trong hệ thống.
+* **Tính năng phụ trách:**
+  * Tính năng Thanh toán: Tính tổng tiền, áp dụng phần trăm giảm giá/ưu đãi, bấm thanh toán và cập nhật lại trạng thái bàn thành "Trống".
+  * Logic in ấn: Xuất hóa đơn ra file text (.txt) hoặc mô phỏng phiếu in tạm tính.
+  * Báo cáo thống kê: Sử dụng thư viện `LiveCharts` để vẽ biểu đồ doanh thu theo ngày/tháng/năm, thống kê các món uống bán chạy nhất.
+  * Cụm Quản lý Nhân viên: Thêm, sửa, xóa thông tin nhân viên, phân ca làm việc.
+
+### 4. Bằng — Khối 04: Cấu Hình Hệ Thống, Quy Định & Bảo Mật
+* **Vai trò chính:** Quản lý các tham số vận hành và thông tin Admin.
+* **Tính năng phụ trách:**
+  * Quản lý thông tin Admin: Thay đổi thông tin cá nhân của chủ quán, tính năng Đổi mật khẩu.
+  * Quản lý Quy định quán: Lưu trữ và cho phép chỉnh sửa các tham số hệ thống (Ví dụ: Thiết lập mức thuế VAT mặc định, quy định tỷ lệ quy đổi điểm tích lũy khách hàng, thiết lập mức cảnh báo nguyên liệu chạm đáy trong kho).
+
