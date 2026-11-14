@@ -1,3 +1,9 @@
+Low tech Git Actions --- Thông cảm có gì đề xuất với =)) (Commit Messege, Actions Workflow,...)
+
+
+ Quản lý progress Project thông qua Boards --> Assingn Tasks ToDo
+
+
 ## 🏗️ Demo Phân Chia Công Việc Theo Khung Cốt Lõi Dự Án
 
 Dự án được chia làm 4 khối nghiệp vụ độc lập. Mỗi thành viên chịu trách nhiệm TRỌN GÓI cụm của mình (Vẽ UI theo + Thiết kế bảng SQL + Viết code C# kết nối).
@@ -30,4 +36,5 @@ Dự án được chia làm 4 khối nghiệp vụ độc lập. Mỗi thành vi
 * **Tính năng phụ trách:**
   * Quản lý thông tin Admin: Thay đổi thông tin cá nhân của chủ quán, tính năng Đổi mật khẩu.
   * Quản lý Quy định quán: Lưu trữ và cho phép chỉnh sửa các tham số hệ thống (Ví dụ: Thiết lập mức thuế VAT mặc định, quy định tỷ lệ quy đổi điểm tích lũy khách hàng, thiết lập mức cảnh báo nguyên liệu chạm đáy trong kho).
+
 
