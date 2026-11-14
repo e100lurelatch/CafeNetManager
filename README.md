@@ -37,5 +37,5 @@
 
 ## 🔐 Tài khoản demo
 
-* **Tài khoản:** `admin`
+* **Tài khoản:** `Admin`
 * **Mật khẩu:** `123456`
