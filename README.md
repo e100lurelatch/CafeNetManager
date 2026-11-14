@@ -1,10 +1,7 @@
-# ☕ CafeNetManager — Quản Lý Cà Phê
-
 ![.NET](https://shields.io)
 ![Architecture](https://shields.io)
 ![UI](https://shields.io)
 ![Database](https://shields.io)
-
 Đồ án môn học: Ứng dụng desktop quản lý quán cà phê — quản lý danh mục món ăn/bàn ăn/khách hàng, gọi món trực quan, tính tiền xuất hóa đơn và báo cáo doanh thu chi tiết.
 
 ## Mục lục
