@@ -16,26 +16,42 @@
 
 ---
 
-## 🚀 Tính năng
+## Tính năng
+  
+| Nhóm | Nội dung |
+| :--- | :--- |
+| **Danh mục** | Quản lý loại đồ uống, món ăn, khách hàng, bàn ăn (CRUD + tìm kiếm) |
+| **Gọi món** | Chọn món trực quan theo sơ đồ bàn, tùy chỉnh topping, chuyển/tách/gộp hóa đơn |
+| **Thanh toán** | Tính tiền tự động, áp dụng mã giảm giá, xuất hóa đơn ra file `.txt` hoặc in tạm tính |
+| **Trực quan** | Sơ đồ phòng bàn đổi màu động theo trạng thái trống/đang có khách |
+| **Báo cáo** | Thống kê doanh thu, số lượng món bán ra theo khoảng ngày |
 
-* **Quản lý bàn & Gọi món:** Giao diện sơ đồ bàn trực quan, đổi bàn, tách/gộp hóa đơn.
-* **Quản lý thực đơn:** Thêm/sửa/xóa món ăn, đồ uống, thiết lập giá và phân loại.
-* **Thống kê doanh thu:** Báo cáo chi tiết theo ngày, hiển thị biểu đồ trực quan.
+**Luồng nghiệp vụ khép kín:** Đăng nhập → Sơ đồ bàn → Gọi món → Vào bếp → Phục vụ → Thanh toán / Hóa đơn → Báo cáo doanh thu.
 
-## 🛠️ Công nghệ
+
+## Công nghệ
 
 * **Framework:** .NET 8.0 / WPF (Windows Presentation Foundation)
 * **Thư viện UI:** WPF-UI / MaterialDesignInXaml
 * **Cơ sở dữ liệu:** Microsoft SQL Server
 
-## 💻 Cài đặt và chạy
+## Cài đặt và chạy
 
 1. Clone repository này về máy cá nhân.
 2. Khởi tạo cơ sở dữ liệu bằng cách chạy file script `.sql` đi kèm trong SQL Server.
 3. Thay đổi chuỗi kết nối kết nối `ConnectionString` trong file `App.config`.
 4. Mở giải pháp (`.sln`) bằng Visual Studio và nhấn `F5` để chạy.
 
-## 🔐 Tài khoản demo
+## Tài khoản demo
 
 * **Tài khoản:** `Admin`
 * **Mật khẩu:** `123456`
+
+## Thành viên
+
+| Thành viên | Phụ trách |
+| :--- | :--- |
+| Nguyễn Đăng Dương | • Xây dựng tính năng quản lý nhân viên<br>• Xây dựng tính năng báo cáo thống kê doanh thu |
+| Võ Anh Quân       | • Xây dựng tính năng bảng điều khiển admin<br> • Xây dựng tính năng quản lý món ăn<br>• Xây dựng tính năng quản lý nguồn hàng |
+| Hà Anh Bằng       | • Xây dựng tính năng quản lý thông tin admin<br>• Xây dựng tính năng quản lý thông tin quy định |
+| Lê Đức Anh        | • Xây dựng tính năng quản lý bàn ăn, thanh toán<br>• Xây dựng tính năng quản lý ưu đãi  |
