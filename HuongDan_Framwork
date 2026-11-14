@@ -1,0 +1,114 @@
+# 📘 HƯỚNG DẪN ĐỒNG BỘ CODE & QUY ƯỚC DỰ ÁN (Tài liệu demo nội )
+
+File này mô tả Framework trong quá trình làm code. Khi hoàn thành dự án, xóa file này đi trước khi nộp.
+-----------------
+
+Để một ứng dụng (bất kể là app máy tính, app điện thoại hay trang web) có thể hoạt động được, nó luôn bắt buộc phải là sự kết hợp khép kín của 3 chiếc kiềng ba chân này:
+
+ [ 1. UI/UX ] ─── (Tương tác) ───> [ 2. Logic (C#) ] ─── (Lưu trữ) ───> [ 3. SQL / Database ]
+  (Giao diện)                       (Bộ não xử lý)                     (Kho chứa dữ liệu)
+
+--->
+
+
+## 1. Quy trình làm việc với Git hàng ngày (Tránh bị đè code)
+
+* **Bước 1 (Trước khi code):** Mở Visual Studio -> Vào mục `Git` -> Bấm `Pull` để tải toàn bộ code mới nhất mà mn đã up lên về máy mình.
+* **Bước 2 (Tiến hành code):** Làm tính năng được phân công.
+* **Bước 3 (Sau khi hoàn thành):** 
+  1. Vào tab `Git Changes` ở góc phải dưới Visual Studio.
+  2. Ghi chú thích rõ ràng vào ô trống (Ví dụ: `Quân: Xong UI Quản lý nhân viên`).
+  3. Bấm nút `Commit All`.
+  4. Bấm tiếp nút mũi tên chỉ lên `Push` để đẩy code lên GitHub cho cả nhóm dùng.
+
+---
+
+## 📁 2. Quy ước đặt tên và vị trí lưu file (Chuẩn MVVM)
+
+Để khi ráp code không bị lỗi và dễ tìm kiếm, chỉ cần lưu file đã thử đsung vào các thư mục sau trong Solution `CafeNetManager.WPF_Nhom`:
+
+* **Giao diện (UI):** Lưu vào thư mục `Views`. Tên file phải có đuôi là `View.xaml`. 
+  *(Ví dụ: NhanVienView.xaml, MonAnView.xaml)*
+* **Logic xử lý:** Lưu vào thư mục `ViewModels`. Tên file phải có đuôi là `ViewModel.cs`. 
+  *(Ví dụ: NhanVienViewModel.cs, DoUongViewModel.cs)*
+* **Lớp dữ liệu:** Lưu vào thư mục `Models`. 
+  *(Ví dụ: NhanVien.cs, DoUong.cs)*
+
+📦 Solution 'CafeNetManager.WPF_Nhom'
+ ┗ 📦 CafeNetManager.WPF (Dự án chính)
+    ┃
+    ┣ 📁 Views  <--- 🟢 Định tạo giao diện (.xaml) thì chèn vào đây
+    ┃  ┣ 📄 LoginView.xaml
+    ┃  ┣ 📄 NhanVienView.xaml  (Khánh tạo)
+    ┃  ┗ 📄 BanAnView.xaml    (Tài tạo)
+    ┃
+    ┣ 📁 ViewModels  <--- 🟢 File xử lý logic (.cs) đi kèm giao diện thì chèn vào đây
+    ┃  ┣ 📄 LoginViewModel.cs
+    ┃  ┣ 📄 NhanVienViewModel.cs (Khánh viết)
+    ┃  ┗ 📄 BanAnViewModel.cs   (Tài viết)
+    ┃
+    ┣ 📁 Models  <--- 🟢 Các file định nghĩa cấu trúc dữ liệu thì chèn vào đây
+    ┃  ┣ 📄 DoUong.cs
+    ┃  ┗ 📄 NhanVien.cs
+    ┃
+    ┗ 📄 App.config (Nơi chứa chuỗi kết nối Database SQL Server) -->cái này chx rõ lắm nên mik hỏi AI
+
+---
+
+## 💾 3. Lưu ý về Cơ sở dữ liệu (SQL Server)
+
+Câu này giải quyết một vấn đề cực kỳ đau đầu khi làm việc nhóm: Làm sao để database (Cơ sở dữ liệu) ở máy của 4 thành viên luôn giống hệt nhau
+
+Tưởng tượng tình huống này:
+• A làm tính năng Quản lý nhân viên. A mở phần mềm SSMS trên máy của mình ra và tự add thêm một cái bảng tên là NHANVIEN (gồm các cột: Mã NV, Tên, Số điện thoại) để lưu dữ liệu.
+• Nếu chỉ viết code WPF rồi push lên GitHub mà không gửi cái bảng SQL đó cho mn, thì khi tải code của A về máy mình và bấm nút Chạy, phần mềm sẽ lập tức bị crash hoặc báo lỗi đỏ vì SQL Server trên máy của ng khác chưa hề có bảng NHANVIEN đó.
+
+1--->>>
+Cách "Script Table" trong SSMS (Dành cho người vừa sửa Database)
+
+Khi bất kỳ ai trong nhóm thêm bảng mới hoặc sửa cột, người đó phải làm việc này trước khi push code:
+1. Mở phần mềm SQL Server Management Studio (SSMS) lên.
+2. Tìm đến cái bảng mình vừa tạo mới ở cột bên trái (Ví dụ bảng NHANVIEN).
+3. Click chuột phải vào cái bảng đó.
+4. Di chuột chọn dòng Script Table as ➡️ Chọn tiếp CREATE To ➡️ Chọn New Query Editor Window (hoặc File... để lưu thẳng thành file).
+5. Một trang toàn chữ lệnh SQL hiện ra (Dạng: CREATE TABLE NHANVIEN (...)). Các bạn lưu file này lại với đuôi là .sql (Ví dụ: update_ban_nhanvien.sql) rồi ném file này vào thư mục dự án trên GitHub.
+
+
+2---->>>
+Cách các thành viên khác "Cập nhật" vào máy mình
+
+Khi bạn thấy trên GitHub xuất hiện file update_ban_nhanvien.sql mới do ai đó up lên, chỉ cần:
+1. Tải file .sql đó về máy (qua lệnh Git Pull thông thường).
+2. Click đúp chuột để mở file đó bằng phần mềm SSMS của máy bạn.
+3. Bấm nút Execute (hình tam giác màu xanh lá cây hoặc ấn phím F5).
+4. Ngay lập tức, SQL Server máy sẽ tự động sinh ra bảng NHANVIEN giống y hệt máy của người vừa sửa mà không cần phải tự tay gõ từng cột nữa.
+
+NÓI CHUNG: Cả nhóm dùng chung duy nhất một file tên là CafeNetManager.sql đặt trên GitHub. Ai thêm bảng gì thì cứ mở file đó ra, dán đoạn code CREATE TABLE mới của mình xuống cuối file rồi lưu lại là xong!
+
+++++ Nguồn tài liệu nếu cần cập nhật thêm skill để tăng tiến độ Project  ++++: 
+  Google AI Plus 
+  https://www.youtube.com/watch?v=iJp10C27Fmg (ngoctienTNT) 2:29:19-3:12:46 (Ex demo*).
+  ...
+------->>
+  UIT course --- đang học
+  Buổi 9: Đồ họa 2D
+
+  Tổng quan về đồ họa trong WPF
+  Vẽ các hình cơ bản
+  Các chổi tô (Brushes)
+  Các phép biến đổi hình học (Transforms)
+------->>
+  Date limit exceeds (25/12/2026) remaining times ! 42 days
+------->>
+  Thông điệp về lợi ích và cách phối hợp hiệu quả:
+* Mọi người tự chủ động sắp xếp thời gian code theo lịch học cá nhân.
+* Nếu vướng ở đoạn code UI, SQL hay logic nào quá 1,2 ngày mà khó giải quyết được, hãy nhắn lên nhóm để mọi người hỗ trợ code chung (Pair programming), đừng bỏ dở nó phí tg chần chừ + ideas.
+* Cố gắng duy trì việc cập nhật code (`Pull` và `Push`) đều đặn mỗi tuần để cả nhóm biết dự án vẫn đang tiến triển tốt đẹp.
+* Recommend không thêm deadline, nếu mọi người cảm thấy chậm progress thì nên đề xuất linh hoạt meet On/Off nếu cần thiết (buff).
+  
+Đây là một trong những môn đặc thù liên quan tới kĩ nănng phần mềm (Độ khó 3.5 / 5 ⭐) (Mức độ: Skill thực chiến, ráp nối hệ thống).
+  * (CV/Portfolio): Có sản phẩm thực tế. Phần mềm Quản lý Cà phê này chính là thứ đầu tiên chúng ta có thể tự hào viết vào CV và bật demo.
+  * Làm quen với kiến trúc chuẩn doanh nghiệp (MVVM):
+  * Trải nghiệm làm việc nhóm thực tế (Git/GitHub):** Đi làm ở bất kỳ công ty phần mềm nào, kỹ năng phối hợp code qua Git mà không làm mất bài của nhau là bắt buộc 100%. 
+  * Nếu project nỏi bật có khả năng đứng top GPA môn học (50%).
+  
