@@ -80,7 +80,7 @@ Khi bất kỳ ai trong nhóm thêm bảng mới hoặc sửa cột, người đ
 2---->>>
 Cách các thành viên khác "Cập nhật" vào máy mình
 
-Khi bạn thấy trên GitHub xuất hiện file update_ban_nhanvien.sql mới do ai đó up lên, chỉ cần:
+Khi thấy trên GitHub xuất hiện file update_ban_nhanvien.sql mới do ai đó up lên, chỉ cần:
 1. Tải file .sql đó về máy (qua lệnh Git Pull thông thường).
 2. Click đúp chuột để mở file đó bằng phần mềm SSMS của máy bạn.
 3. Bấm nút Execute (hình tam giác màu xanh lá cây hoặc ấn phím F5).
@@ -90,6 +90,18 @@ NÓI CHUNG: Cả nhóm dùng chung duy nhất một file tên là CafeNetManager
 
 
 ## 📚 4. Cập nhật tiến độ trong file Nhat_Ky
+
+
+## 5.🎨 QUY ƯỚC VIẾT CODE CHUNG (Tham khảo AI)
+
+Để code của nhóm đồng bộ như do 1 người viết, nên tuân thủ các quy tắc sau: 
+
+1. **Ngôn ngữ đặt tên:** Thống nhất đặt tên biến/hàm bằng [Tiếng Anh hoặc Tiếng Việt không dấu].
+2. **Quy tắc viết chữ:**
+   * Tên Lớp/Class, tên File, tên Hàm: Viết hoa chữ cái đầu (PascalCase). Ví dụ: `DataProvider`, `GetListMonAn()`.
+   * Tên biến tạm, tên tham số: Viết hoa từ chữ thứ hai (LẠC ĐÀ) (camelCase). Ví dụ: `connectionString`, `idNhanVien`.
+3. **Mô hình MVVM:** Không viết logic xử lý vào file code-behind (`.xaml.cs`). File đó chỉ để trống. Mọi logic tính toán, gọi database nằm trong file `ViewModel.cs`.
+4. **Không giấu bug:** Code chạy bị lỗi phải báo ngay, không âm thầm push code lỗi lên làm hỏng bài của người khác.
 
 
 --- 📌 DONE HOW TO BASICS 📌--- 
