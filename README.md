@@ -1,3 +1,4 @@
+DEMO DEMO DEMO, PUBLIC EDIT
 # ☕ CafeNetManager — Quản Lý Cà Phê
 
 ![Framework](https://shields.io)
@@ -31,7 +32,7 @@
 
 ## Công nghệ
 
-* **Framework:** .NET 8.0 / WPF (Windows Presentation Foundation)
+* **Framework:** .NET 10.0 / WPF (Windows Presentation Foundation)
 * **Thư viện UI:** WPF-UI / MaterialDesignInXaml
 * **Cơ sở dữ liệu:** Microsoft SQL Server
 
