@@ -1,15 +1,34 @@
 *Low tech Git Actions --- Thông cảm có gì đề xuất với =)) (Commit Messege, Actions Workflow,...)*
 
 
- Mn vào mục Project >> CafeNetManager untitled project trên web assign tasks để làm chủ tiến độ progress mỗi người nha.
+ Hiện đang theo kiểu demo theo các tính năng base như sau: https://www.youtube.com/watch?v=iJp10C27Fmg&list=PLsrNNYXkHiJUtY2A0jHRFatQHbV5BT61y&index=3 khúc 2:32:42
 
- Nếu có thắc mắc ở task nào thì vào ask -> Add a comment.
+ nên chia công việc tạm chia  ý tương đối như sau, nếu có ý tưởng gì mn vào cải tiến hoặc thay đổi. Rồi tạo các thẻ công việc (Card) mới ở cột Todo trên bảng GitHub Projects 
+(có Ghi thêm vài dòng Description ngắn  để dễ tưởng tượng: 
+VD [B] Thiết kế UI màn hình Gọi món 
+Description:
+• Giao diện chia làm 2 phần: Bên trái là danh sách các danh mục món (Cà phê, Trà, Sinh tố); Bên phải là bảng DataGrid hiển thị các món đã chọn của bàn đó.
+• Ở góc dưới bên phải có thêm ô hiện Tổng tiền tạm tính và một ô nhập Ghi chú (ví dụ: "ít đường", "nhiều đá").
+• Sử dụng dữ liệu giả lập (Mock Data) từ file TableViewModel.cs để hiển thị danh sách lên trước, chưa kết nối SQL.)
 
- Hiện đang theo kiểu demo theo các tính năng cốt lõi như sau: https://www.youtube.com/watch?v=iJp10C27Fmg&list=PLsrNNYXkHiJUtY2A0jHRFatQHbV5BT61y&index=3 khúc 2:32:42
+Mn vào mục Project >> CafeNetManager untitled project trên board và assign tasks để làm chủ tiến độ progress  mỗi người nha.
 
- nên hân chia công việc tạm chia nguyên  như sau, nếu có j thì thay đổi.
+ Nếu có thắc mắc ở task nào thì Add a comment.
+ 
 
 ## 🏗️ Demo Phân Chia Công Việc Theo Khung Cốt Lõi Dự Án
+
+1. Luồng vận hành
+Khách vào quán ➔ Hiển thị Sơ đồ bàn để xếp chỗ ➔ Khách chọn món ➔ ùng chức năng Gọi món (Order) để ghi nhận ly Cà phê sữa đá, ít đường 
+-> Khách uống xong ➔ Anh bấm Thanh toán, tự động tính tiền, giảm giá ➔ In hóa đơn cho khách ➔ Trả bàn về trạng thái "Trống" để Dương đón khách tiếp theo.
+
+2. Các tính năng quản trị 
+
+Bên cạnh việc bán hàng tại quầy, một phần mềm quản lý thì bắt buộc phải có chức năng quản lý "đầu vào" và "đầu ra":
+• Thực đơn & Kho (Khối 01): Nếu không cho Thêm/Sửa/Xóa món ăn hoặc không nhập hạt cà phê vào kho, sẽ không có món để bấm chọn cho khách.
+• Doanh thu & Nhân sự (Khối 03): Cuối ngày chủ quán phải biết hôm nay bán được bao nhiêu tiền (Biểu đồ) và nhân viên nào làm ca đó.
+• Quy định & Tham số (Khối 04): Định hình luật chơi cho phần mềm (Thuế VAT là bao nhiêu %, mật khẩu Admin là gì).
+
 
 Dự án được chia làm 4 khối nghiệp vụ độc lập. Mỗi thành viên chịu trách nhiệm TRỌN GÓI cụm của mình (Vẽ UI theo + Thiết kế bảng SQL + Viết code C# kết nối).
 
@@ -20,23 +39,23 @@ Dự án được chia làm 4 khối nghiệp vụ độc lập. Mỗi thành vi
   * Khung bảng điều khiển chính (Main Dashboard / Navigation Menu).
   * Cụm Quản lý Món ăn / Thực đơn (Thêm, sửa, xóa món, đặt giá tiền, phân loại đồ uống).
   * Cụm Quản lý Nguồn hàng / Kho (Nhập kho nguyên liệu, theo dõi tồn kho).
-
-### 2. Dương — Khối 02: Nghiệp Vụ Phòng Bàn & Gọi Món (Core chính)
+ 
+### 2. Bảo — Khối 02: Nghiệp Vụ Phòng Bàn & Gọi Món 
 * **Vai trò chính:** Xử lý luồng vận hành trực quan tại quán.
 * **Tính năng phụ trách:**
   * Sơ đồ phòng bàn động (Hiển thị danh sách bàn, tự động đổi màu theo trạng thái: Bàn trống, Bàn đang có khách, Bàn đặt trước).
   * Giao diện Gọi món (Order): Khi click vào một bàn ➡️ Hiện danh sách món ➡️ Cho phép chọn món, tăng giảm số lượng, thêm ghi chú (Topping/đá/đường).
-  * Logic nghiệp vụ bàn: Chuyển bàn (Đổi từ bàn A sang bàn B), Tách/Gộp hóa đơn của nhiều bàn lại với nhau.
+  * Logic nghiệp vụ bàn: Chuyển bàn (Đổi từ bàn A sang bàn B).
 
-## 3. Anh — Khối 03: Thanh Toán, Doanh Thu & Nhân Sự
-* **Vai trò chính:** Xử lý dòng tiền và con người trong hệ thống.
+## 3. Bằng — Khối 03: Thanh Toán, Doanh Thu & Nhân Sự
+* **Vai trò chính:** Xử lý dòng tiền và người trong hệ thống.
 * **Tính năng phụ trách:**
   * Tính năng Thanh toán: Tính tổng tiền, áp dụng phần trăm giảm giá/ưu đãi, bấm thanh toán và cập nhật lại trạng thái bàn thành "Trống".
   * Logic in ấn: Xuất hóa đơn ra file text (.txt) hoặc mô phỏng phiếu in tạm tính.
   * Báo cáo thống kê: Sử dụng thư viện `LiveCharts` để vẽ biểu đồ doanh thu theo ngày/tháng/năm, thống kê các món uống bán chạy nhất.
   * Cụm Quản lý Nhân viên: Thêm, sửa, xóa thông tin nhân viên, phân ca làm việc.
 
-### 4. Bằng — Khối 04: Cấu Hình Hệ Thống, Quy Định & Bảo Mật
+### 4. Dương — Khối 04: Cấu Hình Hệ Thống, Quy Định & Bảo Mật
 * **Vai trò chính:** Quản lý các tham số vận hành và thông tin Admin.
 * **Tính năng phụ trách:**
   * Quản lý thông tin Admin: Thay đổi thông tin cá nhân của chủ quán, tính năng Đổi mật khẩu.
