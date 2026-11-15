@@ -70,6 +70,35 @@ namespace CafeNetManager.Services
 
         public void CheckoutTable(int tableId) => ClearTable(tableId);
 
+        // ===== Quản lý bàn =====
+        public int AddTable(CafeTable table)
+        {
+            if (_tables.Any(t => t.Name.Equals(table.Name, StringComparison.OrdinalIgnoreCase)))
+                throw new InvalidOperationException($"Đã có bàn tên \"{table.Name}\".");
+            table.TableId = _tables.Count == 0 ? 1 : _tables.Max(t => t.TableId) + 1;
+            table.Status = TableStatus.Empty;
+            _tables.Add(table);
+            return table.TableId;
+        }
+
+        public void UpdateTable(CafeTable table)
+        {
+            if (_tables.Any(t => t.TableId != table.TableId && t.Name.Equals(table.Name, StringComparison.OrdinalIgnoreCase)))
+                throw new InvalidOperationException($"Đã có bàn tên \"{table.Name}\".");
+            var t = _tables.First(x => x.TableId == table.TableId);
+            t.Name = table.Name;
+            t.Capacity = table.Capacity;
+        }
+
+        public void DeleteTable(int tableId)
+        {
+            var t = _tables.First(x => x.TableId == tableId);
+            if (t.Status != TableStatus.Empty)
+                throw new InvalidOperationException($"{t.Name} đang có khách hoặc đã đặt trước, không xóa được.");
+            _tables.Remove(t);
+            _orders.Remove(tableId);
+        }
+
         private static OrderItem Clone(OrderItem i) => new()
         {
             DrinkId = i.DrinkId, DrinkName = i.DrinkName, UnitPrice = i.UnitPrice,

@@ -12,7 +12,7 @@ namespace CafeNetManager.Services
 
         public List<CafeTable> GetTables()
         {
-            var dt = _db.ExecuteQuery("SELECT TableId, Name, Capacity, Status FROM CafeTables ORDER BY TableId");
+            var dt = _db.ExecuteQuery("SELECT TableId, Name, Capacity, Status FROM CafeTables WHERE IsActive = 1 ORDER BY TableId");
             return dt.AsEnumerable().Select(r => new CafeTable
             {
                 TableId = r.Field<int>("TableId"),
@@ -109,5 +109,47 @@ namespace CafeNetManager.Services
                 UPDATE Orders SET Status = 1 WHERE TableId = @t AND Status = 0;
                 UPDATE CafeTables SET Status = 0 WHERE TableId = @t;",
                 new() { ["@t"] = tableId });
+
+        // ===== Quản lý bàn =====
+        public int AddTable(CafeTable table)
+        {
+            // Nếu trùng tên với bàn đã xóa trước đó thì bật lại bàn đó
+            var existing = _db.ExecuteQuery("SELECT TableId, IsActive FROM CafeTables WHERE Name = @n",
+                new() { ["@n"] = table.Name });
+            if (existing.Rows.Count > 0)
+            {
+                if (existing.Rows[0].Field<bool>("IsActive"))
+                    throw new InvalidOperationException($"Đã có bàn tên \"{table.Name}\".");
+                var id = existing.Rows[0].Field<int>("TableId");
+                _db.ExecuteNonQuery("UPDATE CafeTables SET IsActive = 1, Capacity = @c, Status = 0 WHERE TableId = @id",
+                    new() { ["@c"] = table.Capacity, ["@id"] = id });
+                return id;
+            }
+
+            return Convert.ToInt32(_db.ExecuteScalar(
+                "INSERT INTO CafeTables(Name, Capacity, Status, IsActive) VALUES(@n, @c, 0, 1); SELECT CAST(SCOPE_IDENTITY() AS INT);",
+                new() { ["@n"] = table.Name, ["@c"] = table.Capacity }));
+        }
+
+        public void UpdateTable(CafeTable table)
+        {
+            var dup = _db.ExecuteScalar("SELECT COUNT(*) FROM CafeTables WHERE Name = @n AND TableId <> @id",
+                new() { ["@n"] = table.Name, ["@id"] = table.TableId });
+            if (Convert.ToInt32(dup) > 0)
+                throw new InvalidOperationException($"Đã có bàn tên \"{table.Name}\".");
+
+            _db.ExecuteNonQuery("UPDATE CafeTables SET Name = @n, Capacity = @c WHERE TableId = @id",
+                new() { ["@n"] = table.Name, ["@c"] = table.Capacity, ["@id"] = table.TableId });
+        }
+
+        // Xóa mềm (IsActive = 0) để giữ lịch sử order/hóa đơn của bàn
+        public void DeleteTable(int tableId)
+        {
+            var status = Convert.ToInt32(_db.ExecuteScalar("SELECT Status FROM CafeTables WHERE TableId = @id",
+                new() { ["@id"] = tableId }));
+            if (status != 0)
+                throw new InvalidOperationException("Bàn đang có khách hoặc đã đặt trước, không xóa được.");
+            _db.ExecuteNonQuery("UPDATE CafeTables SET IsActive = 0 WHERE TableId = @id", new() { ["@id"] = tableId });
+        }
     }
 }
