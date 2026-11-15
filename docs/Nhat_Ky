@@ -73,7 +73,14 @@ quy định tỷ lệ quy đổi điểm tích lũy khách hàng, thiết lập 
 - [x] Tạo Model tài khoản người dùng (`User.cs`).
 - [x] Cập nhật file hướng dẫn quy ước đồng bộ Git nội bộ cho nhóm.
 ---
- Khối 02
+ Khối 02 (Bảo - đang hoàn thành)
+- [x] Sơ đồ bàn động `TableView.xaml`: tô màu theo trạng thái Trống / Có khách / Đặt trước, đếm số bàn mỗi loại.
+- [x] Gọi món trong `TableViewModel.cs`: chọn món, số lượng, ghi chú (ít đường, nhiều đá...), tăng/giảm/xóa món, tổng tiền.
+- [x] Chuyển bàn (chỉ sang bàn trống), đặt trước / hủy đặt, thanh toán đơn giản trả bàn về Trống.
+- [x] Kết nối SQL Server: `App.config` (chuỗi kết nối CafeDB), `DAL/DataProvider.cs` (dùng chung cả nhóm), `Services/SqlTableService.cs`.
+- [x] File SQL chung `database/CafeNetManager.sql`: bảng CafeTables, Orders, OrderDetails, procedure sp_TransferTable, dữ liệu mẫu (bảng Drinks tạm, Quân chỉnh lại).
+- [x] Thêm `ViewModelBase.cs`, `RelayCommand.cs` dùng chung cho các ViewModel.
+- [ ] Thống nhất với Bằng phần Thanh toán (giảm giá, in hóa đơn) và với Quân bảng Drinks + điều hướng MainWindow.
 
 ---
  Khối 03

@@ -4,9 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CafeNetManager"
+        xmlns:views="clr-namespace:CafeNetManager.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="CafeNetManager" Height="700" Width="1200" WindowStartupLocation="CenterScreen">
     <Grid>
-
+        <!-- Tạm thời hiện màn hình Bàn (Module 02 - Bảo) để test.
+             Khi Quân làm xong dashboard/menu điều hướng thì thay bằng điều hướng chung. -->
+        <views:TableView/>
     </Grid>
 </Window>
