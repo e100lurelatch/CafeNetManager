@@ -59,6 +59,26 @@ Dự án được chia làm 4 khối nghiệp vụ độc lập. Mỗi thành vi
 * **Vai trò chính:** Quản lý các tham số vận hành và thông tin Admin.
 * **Tính năng phụ trách:**
   * Quản lý thông tin Admin: Thay đổi thông tin cá nhân của chủ quán, tính năng Đổi mật khẩu.
-  * Quản lý Quy định quán: Lưu trữ và cho phép chỉnh sửa các tham số hệ thống (Ví dụ: Thiết lập mức thuế VAT mặc định, quy định tỷ lệ quy đổi điểm tích lũy khách hàng, thiết lập mức cảnh báo nguyên liệu chạm đáy trong kho).
+ * Quản lý Quy định quán: Lưu trữ và cho phép chỉnh sửa các tham số hệ thống (Ví dụ: Thiết lập mức thuế VAT mặc định, 
+quy định tỷ lệ quy đổi điểm tích lũy khách hàng, thiết lập mức cảnh báo nguyên liệu chạm đáy trong kho).
+
+
+# 📝 NHẬT KÝ TIẾN ĐỘ DỰ ÁN (WEEKLY REPORT)
+
+ ## 📅 WEEK 1 (15/11/2026 - 22/11/2026)
+
+  Khối 01 (Nội dung đang hoàn thành)
+- [x] Khởi tạo cấu trúc thư mục chuẩn MVVM cho dự án .NET 10.0.
+- [x] Thiết kế hoàn chỉnh giao diện màn hình Đăng nhập (`LoginView.xaml`).
+- [x] Tạo Model tài khoản người dùng (`User.cs`).
+- [x] Cập nhật file hướng dẫn quy ước đồng bộ Git nội bộ cho nhóm.
+---
+ Khối 02
+
+---
+ Khối 03
+
+---
+ Khối 04
 
 
