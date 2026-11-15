@@ -1,4 +1,4 @@
-DEMO DEMO DEMO, PUBLIC EDIT
+DEMO DEMO DEMO, ĐỂ NHÁP THÔI chưa sửa
 # ☕ CafeNetManager — Quản Lý Cà Phê
 
 ![Framework](https://shields.io)
@@ -55,4 +55,4 @@ DEMO DEMO DEMO, PUBLIC EDIT
 | Nguyễn Đăng Dương | • Xây dựng tính năng quản lý nhân viên<br>• Xây dựng tính năng báo cáo thống kê doanh thu |
 | Võ Anh Quân       | • Xây dựng tính năng bảng điều khiển admin<br> • Xây dựng tính năng quản lý món ăn<br>• Xây dựng tính năng quản lý nguồn hàng |
 | Hà Anh Bằng       | • Xây dựng tính năng quản lý thông tin admin<br>• Xây dựng tính năng quản lý thông tin quy định |
-| Lê Đức Anh        | • Xây dựng tính năng quản lý bàn ăn, thanh toán<br>• Xây dựng tính năng quản lý ưu đãi  |
+| Lê Đức Bảo        | • Xây dựng tính năng quản lý bàn ăn, thanh toán<br>• Xây dựng tính năng quản lý ưu đãi  |
