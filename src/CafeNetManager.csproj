@@ -9,6 +9,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <!-- Kết nối SQL Server + đọc App.config -->
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="6.1.1" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Views\Images\logo.jpg" />
     <None Remove="Views\Images\shop.jpg" />
   </ItemGroup>

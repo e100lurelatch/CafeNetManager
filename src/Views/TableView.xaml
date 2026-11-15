@@ -1,0 +1,247 @@
+<UserControl x:Class="CafeNetManager.Views.TableView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:CafeNetManager.ViewModels"
+             mc:Ignorable="d"
+             d:DesignWidth="1100" d:DesignHeight="650"
+             Background="#FAF7F2" FontSize="14">
+    <!-- Module 02 - Bảo: Sơ đồ bàn + Gọi món + Chuyển bàn -->
+
+    <UserControl.DataContext>
+        <vm:TableViewModel/>
+    </UserControl.DataContext>
+
+    <UserControl.Resources>
+        <SolidColorBrush x:Key="Coffee" Color="#6F4E37"/>
+        <SolidColorBrush x:Key="EmptyBrush" Color="#43A047"/>
+        <SolidColorBrush x:Key="OccupiedBrush" Color="#E53935"/>
+        <SolidColorBrush x:Key="ReservedBrush" Color="#FB8C00"/>
+
+        <Style x:Key="ActionButton" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource Coffee}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="14,8"/>
+            <Setter Property="Margin" Value="0,0,8,0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.45"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="SmallButton" TargetType="Button">
+            <Setter Property="Width" Value="26"/>
+            <Setter Property="Height" Value="26"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Margin="16">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.2*"/>
+            <ColumnDefinition Width="16"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- ================= CỘT TRÁI: SƠ ĐỒ BÀN ================= -->
+        <DockPanel Grid.Column="0">
+            <StackPanel DockPanel.Dock="Top" Margin="0,0,0,12">
+                <TextBlock Text="SƠ ĐỒ BÀN" FontSize="22" FontWeight="Bold" Foreground="{StaticResource Coffee}"/>
+                <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                    <Border Background="{StaticResource EmptyBrush}" Width="14" Height="14" CornerRadius="3"/>
+                    <TextBlock Margin="6,0,18,0" Text="{Binding EmptyCount, StringFormat=Trống ({0})}"/>
+                    <Border Background="{StaticResource OccupiedBrush}" Width="14" Height="14" CornerRadius="3"/>
+                    <TextBlock Margin="6,0,18,0" Text="{Binding OccupiedCount, StringFormat=Có khách ({0})}"/>
+                    <Border Background="{StaticResource ReservedBrush}" Width="14" Height="14" CornerRadius="3"/>
+                    <TextBlock Margin="6,0,0,0" Text="{Binding ReservedCount, StringFormat=Đặt trước ({0})}"/>
+                </StackPanel>
+            </StackPanel>
+
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <ItemsControl ItemsSource="{Binding Tables}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button Width="130" Height="100" Margin="0,0,12,12" Cursor="Hand"
+                                    Foreground="White" BorderThickness="4"
+                                    Command="{Binding DataContext.SelectTableCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                    CommandParameter="{Binding}">
+                                <Button.Style>
+                                    <Style TargetType="Button">
+                                        <Setter Property="Background" Value="{StaticResource EmptyBrush}"/>
+                                        <Setter Property="BorderBrush" Value="Transparent"/>
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border Background="{TemplateBinding Background}"
+                                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                                            BorderThickness="{TemplateBinding BorderThickness}"
+                                                            CornerRadius="12">
+                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Status}" Value="Occupied">
+                                                <Setter Property="Background" Value="{StaticResource OccupiedBrush}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Status}" Value="Reserved">
+                                                <Setter Property="Background" Value="{StaticResource ReservedBrush}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                                                <Setter Property="BorderBrush" Value="#3E2723"/>
+                                            </DataTrigger>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Opacity" Value="0.85"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Name}" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="{Binding StatusText}" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Capacity, StringFormat={}{0} chỗ}" FontSize="12" HorizontalAlignment="Center" Opacity="0.85"/>
+                                </StackPanel>
+                            </Button>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </DockPanel>
+
+        <!-- ================= CỘT PHẢI: GỌI MÓN ================= -->
+        <Border Grid.Column="2" Background="White" CornerRadius="12" Padding="16"
+                BorderBrush="#E0D6CC" BorderThickness="1">
+            <DockPanel>
+                <TextBlock DockPanel.Dock="Top" Text="{Binding SelectedTableTitle}"
+                           FontSize="20" FontWeight="Bold" Foreground="{StaticResource Coffee}" Margin="0,0,0,12"/>
+
+                <!-- Đáy: tổng tiền + chuyển bàn + thanh toán -->
+                <StackPanel DockPanel.Dock="Bottom" Margin="0,12,0,0">
+                    <Separator Margin="0,0,0,10"/>
+                    <DockPanel Margin="0,0,0,12">
+                        <TextBlock Text="Tổng cộng:" FontSize="18"/>
+                        <TextBlock Text="{Binding Total, StringFormat={}{0:N0} đ}" FontSize="22" FontWeight="Bold"
+                                   Foreground="{StaticResource OccupiedBrush}" HorizontalAlignment="Right"/>
+                    </DockPanel>
+
+                    <DockPanel Margin="0,0,0,10">
+                        <TextBlock Text="Chuyển sang:" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                        <Button DockPanel.Dock="Right" Content="Chuyển bàn" Style="{StaticResource ActionButton}"
+                                Margin="8,0,0,0" Command="{Binding TransferCommand}"/>
+                        <ComboBox ItemsSource="{Binding EmptyTables}" SelectedItem="{Binding TransferTarget}"
+                                  DisplayMemberPath="Name" Padding="6,4"/>
+                    </DockPanel>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button Content="Đặt trước / Hủy đặt" Style="{StaticResource ActionButton}"
+                                Background="{StaticResource ReservedBrush}" Command="{Binding ReserveCommand}"/>
+                        <Button Content="Thanh toán" Style="{StaticResource ActionButton}" Margin="0"
+                                Background="{StaticResource EmptyBrush}" Command="{Binding CheckoutCommand}"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <!-- Giữa: chọn món + danh sách đã gọi -->
+                <Grid IsEnabled="{Binding HasSelectedTable}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Chọn món -->
+                    <Grid Grid.Row="0" Margin="0,0,0,12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="1.5*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="Món" Foreground="Gray" FontSize="12"/>
+                        <TextBlock Grid.Column="1" Text="SL" Foreground="Gray" FontSize="12" Margin="6,0,0,0"/>
+                        <TextBlock Grid.Column="2" Text="Ghi chú (ít đường, nhiều đá...)" Foreground="Gray" FontSize="12" Margin="6,0,0,0"/>
+
+                        <ComboBox Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Menu}"
+                                  SelectedItem="{Binding SelectedDrink}" Padding="6,5">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock>
+                                        <Run Text="{Binding Name, Mode=OneWay}"/>
+                                        <Run Text=" - " Foreground="Gray"/>
+                                        <Run Text="{Binding Price, Mode=OneWay, StringFormat={}{0:N0}đ}" Foreground="Gray"/>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <TextBox Grid.Row="1" Grid.Column="1" Margin="6,0,0,0" Padding="4,5" HorizontalContentAlignment="Center"
+                                 Text="{Binding Quantity, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBox Grid.Row="1" Grid.Column="2" Margin="6,0,0,0" Padding="4,5"
+                                 Text="{Binding Note, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Button Grid.Row="1" Grid.Column="3" Content="+ Thêm" Style="{StaticResource ActionButton}"
+                                Margin="6,0,0,0" Command="{Binding AddItemCommand}"/>
+                    </Grid>
+
+                    <!-- Danh sách món đã gọi -->
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                        <ItemsControl ItemsSource="{Binding Items}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border BorderBrush="#EEE" BorderThickness="0,0,0,1" Padding="0,8">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="100"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                                                <TextBlock Text="{Binding DrinkName}" FontWeight="SemiBold"/>
+                                                <TextBlock FontSize="12" Foreground="Gray">
+                                                    <Run Text="{Binding UnitPrice, Mode=OneWay, StringFormat={}{0:N0}đ}"/>
+                                                    <Run Text="{Binding Note, Mode=OneWay}" Foreground="{StaticResource Coffee}" FontStyle="Italic"/>
+                                                </TextBlock>
+                                            </StackPanel>
+
+                                            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                                <Button Content="−" Style="{StaticResource SmallButton}"
+                                                        Command="{Binding DataContext.DecreaseCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                        CommandParameter="{Binding}"/>
+                                                <TextBlock Text="{Binding Quantity}" Width="32" TextAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+                                                <Button Content="+" Style="{StaticResource SmallButton}"
+                                                        Command="{Binding DataContext.IncreaseCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                        CommandParameter="{Binding}"/>
+                                            </StackPanel>
+
+                                            <TextBlock Grid.Column="2" Text="{Binding LineTotal, StringFormat={}{0:N0}đ}"
+                                                       TextAlignment="Right" VerticalAlignment="Center" FontWeight="SemiBold"/>
+
+                                            <Button Grid.Column="3" Content="✕" Style="{StaticResource SmallButton}" Margin="10,0,0,0"
+                                                    Foreground="{StaticResource OccupiedBrush}" ToolTip="Xóa món"
+                                                    Command="{Binding DataContext.RemoveItemCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                    CommandParameter="{Binding}"/>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </Grid>
+            </DockPanel>
+        </Border>
+    </Grid>
+</UserControl>
