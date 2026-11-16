@@ -2,12 +2,11 @@ using CafeNetManager.Models;
 
 namespace CafeNetManager.Services
 {
-    // Module 02 - Bảo
-    // ViewModel chỉ gọi qua interface này. Hiện dùng MockTableService (dữ liệu giả).
-    // Khi nhóm có DataProvider + SQL, viết SqlTableService cài đặt interface này
-    // rồi đổi 1 dòng trong TableViewModel là xong, không phải sửa giao diện.
+    // Module 02 - Bảo: Bàn + Order
+    // ViewModel chỉ gọi qua interface này: MockTableService (dữ liệu giả) hoặc SqlTableService (SQL Server).
     public interface ITableService
     {
+        // Sơ đồ bàn + gọi món
         List<CafeTable> GetTables();
         List<Drink> GetMenu();
         List<OrderItem> GetOrderItems(int tableId);
@@ -15,6 +14,11 @@ namespace CafeNetManager.Services
         void UpdateTableStatus(int tableId, TableStatus status);
         void TransferTable(int fromTableId, int toTableId);
         void ClearTable(int tableId);      // xóa hết món / hủy bàn
-        void CheckoutTable(int tableId);   // thanh toán xong, trả bàn về Trống
+        void CheckoutTable(int tableId);   // đánh dấu order đã thanh toán, trả bàn về Trống
+
+        // Quản lý bàn (thêm / sửa / xóa)
+        int AddTable(CafeTable table);
+        void UpdateTable(CafeTable table);
+        void DeleteTable(int tableId);     // chỉ xóa được bàn đang Trống
     }
 }

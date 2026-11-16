@@ -8,8 +8,8 @@
         mc:Ignorable="d"
         Title="CafeNetManager" Height="700" Width="1200" WindowStartupLocation="CenterScreen">
     <Grid>
-        <!-- Tạm thời hiện màn hình Bàn (Module 02 - Bảo) để test.
-             Khi Quân làm xong dashboard/menu điều hướng thì thay bằng điều hướng chung. -->
-        <views:TableView/>
+        <!-- Tạm thời hiện các màn hình Module 02 (Bảo) để test.
+             Khi Quân làm xong dashboard/menu điều hướng thì đặt Module02View vào điều hướng chung. -->
+        <views:Module02View/>
     </Grid>
 </Window>
