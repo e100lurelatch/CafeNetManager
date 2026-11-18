@@ -12,6 +12,13 @@
     <!-- Kết nối SQL Server + đọc App.config -->
     <PackageReference Include="Microsoft.Data.SqlClient" Version="6.1.1" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="9.0.0" />
+    <!-- Trình duyệt nhúng để mở trang thanh toán PayPal -->
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3351.48" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Mã PayPal Sandbox riêng của từng máy, không push lên GitHub -->
+    <None Include="PayPal.local.config" Condition="Exists('PayPal.local.config')" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
   <ItemGroup>

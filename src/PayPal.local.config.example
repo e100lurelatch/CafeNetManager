@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copy file này thành "PayPal.local.config" (cùng thư mục src) rồi điền mã. File đó không bị push lên GitHub.
+  Lấy mã: developer.paypal.com -> đăng nhập -> chọn Sandbox -> Apps & Credentials -> Create App
+  -> copy Client ID và Secret dán vào 2 dòng dưới.
+-->
+<appSettings>
+  <add key="PayPal_ClientId" value="DIEN_CLIENT_ID" />
+  <add key="PayPal_Secret" value="DIEN_SECRET" />
+</appSettings>

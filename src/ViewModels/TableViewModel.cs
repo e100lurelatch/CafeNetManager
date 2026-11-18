@@ -5,7 +5,7 @@ using CafeNetManager.Services;
 
 namespace CafeNetManager.ViewModels
 {
-    // Module 02 - Bảo: Sơ đồ bàn + Gọi món + Chuyển bàn
+    // Module 02 - Bảo: Sơ đồ bàn + Gọi món + Chuyển bàn + mở màn hình Thanh toán
     public class TableViewModel : ViewModelBase
     {
         private readonly ITableService _service;
@@ -13,9 +13,7 @@ namespace CafeNetManager.ViewModels
         public ObservableCollection<CafeTable> Tables { get; } = new();
         public ObservableCollection<Drink> Menu { get; } = new();
         public ObservableCollection<OrderItem> Items { get; } = new();
-
-        // Danh sách bàn trống để chọn khi chuyển bàn
-        public ObservableCollection<CafeTable> EmptyTables { get; } = new();
+        public ObservableCollection<CafeTable> EmptyTables { get; } = new();   // để chọn khi chuyển bàn
 
         // ===== Thuộc tính bind ra giao diện =====
         private CafeTable? _selectedTable;
@@ -50,12 +48,11 @@ namespace CafeNetManager.ViewModels
 
         public decimal Total => Items.Sum(i => i.LineTotal);
 
-        // Thống kê nhỏ trên đầu sơ đồ
         public int EmptyCount => Tables.Count(t => t.Status == TableStatus.Empty);
         public int OccupiedCount => Tables.Count(t => t.Status == TableStatus.Occupied);
         public int ReservedCount => Tables.Count(t => t.Status == TableStatus.Reserved);
 
-        // ===== Commands (bind vào Button.Command) =====
+        // ===== Commands =====
         public RelayCommand SelectTableCommand { get; }
         public RelayCommand AddItemCommand { get; }
         public RelayCommand IncreaseCommand { get; }
@@ -65,33 +62,7 @@ namespace CafeNetManager.ViewModels
         public RelayCommand TransferCommand { get; }
         public RelayCommand CheckoutCommand { get; }
 
-        // Constructor không tham số để XAML tạo được ViewModel.
-        // Dùng SQL nếu kết nối được, không thì tự chuyển sang dữ liệu giả để vẫn làm giao diện được.
-        public TableViewModel() : this(CreateService()) { }
-
-        private static ITableService CreateService()
-        {
-            // Đang mở trong designer của Visual Studio -> dùng dữ liệu giả
-            if (System.ComponentModel.DesignerProperties.GetIsInDesignMode(new DependencyObject()))
-                return new MockTableService();
-
-            try
-            {
-                var error = CafeNetManager.DAL.DataProvider.Instance.TestConnection();
-                if (error == null) return new SqlTableService();
-
-                MessageBox.Show("Không kết nối được SQL Server, đang dùng dữ liệu giả.\n\n"
-                              + "Kiểm tra: đã chạy database/CafeNetManager.sql chưa, "
-                              + "Server= trong App.config đúng chưa.\n\nChi tiết: " + error,
-                                "Kết nối CSDL", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Lỗi cấu hình CSDL: " + ex.Message, "Kết nối CSDL",
-                                MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-            return new MockTableService();
-        }
+        public TableViewModel() : this(AppServices.Tables) { }
 
         public TableViewModel(ITableService service)
         {
@@ -106,14 +77,28 @@ namespace CafeNetManager.ViewModels
                                     _ => SelectedTable != null && SelectedTable.Status != TableStatus.Occupied);
             TransferCommand    = new RelayCommand(_ => Transfer(),
                                     _ => SelectedTable?.Status == TableStatus.Occupied && TransferTarget != null);
-            CheckoutCommand    = new RelayCommand(_ => Checkout(), _ => HasSelectedTable && Items.Count > 0);
+            CheckoutCommand    = new RelayCommand(_ => OpenCheckout(), _ => HasSelectedTable && Items.Count > 0);
 
-            foreach (var t in _service.GetTables()) Tables.Add(t);
             foreach (var d in _service.GetMenu()) Menu.Add(d);
-            RefreshSummary();
+            LoadTables();
+
+            // Màn hình Quản lý bàn thêm/sửa/xóa bàn -> tải lại sơ đồ
+            AppServices.TablesChanged += () => Application.Current?.Dispatcher.Invoke(LoadTables);
         }
 
         // ===== Xử lý =====
+        private void LoadTables()
+        {
+            var selectedId = SelectedTable?.TableId;
+            Tables.Clear();
+            foreach (var t in _service.GetTables()) Tables.Add(t);
+
+            var again = Tables.FirstOrDefault(t => t.TableId == selectedId);
+            if (again != null) SelectTable(again);
+            else { SelectedTable = null; Items.Clear(); }
+            RefreshSummary();
+        }
+
         private void SelectTable(CafeTable? table)
         {
             if (table == null) return;
@@ -145,7 +130,6 @@ namespace CafeNetManager.ViewModels
                     Note = note
                 });
 
-            // Bàn trống/đặt trước có món đầu tiên -> chuyển sang Có khách
             if (SelectedTable.Status != TableStatus.Occupied)
                 SetTableStatus(SelectedTable, TableStatus.Occupied);
 
@@ -166,7 +150,6 @@ namespace CafeNetManager.ViewModels
             if (item == null || SelectedTable == null) return;
             Items.Remove(item);
 
-            // Xóa hết món -> trả bàn về Trống
             if (Items.Count == 0)
             {
                 _service.ClearTable(SelectedTable.TableId);
@@ -190,30 +173,38 @@ namespace CafeNetManager.ViewModels
             var from = SelectedTable;
             var to = TransferTarget;
 
-            var ok = MessageBox.Show($"Chuyển {from.Name} sang {to.Name}?", "Chuyển bàn",
-                                     MessageBoxButton.YesNo, MessageBoxImage.Question);
-            if (ok != MessageBoxResult.Yes) return;
+            if (MessageBox.Show($"Chuyển {from.Name} sang {to.Name}?", "Chuyển bàn",
+                                MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes) return;
 
-            _service.TransferTable(from.TableId, to.TableId);
-            from.Status = TableStatus.Empty;
-            to.Status = TableStatus.Occupied;
-
-            SelectTable(to);   // mở luôn bàn mới
+            try
+            {
+                _service.TransferTable(from.TableId, to.TableId);
+                from.Status = TableStatus.Empty;
+                to.Status = TableStatus.Occupied;
+                SelectTable(to);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Không chuyển được bàn: " + ex.Message, "Chuyển bàn",
+                                MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
-        // Thanh toán đơn giản: hiện tổng tiền rồi trả bàn về Trống.
-        // Phần giảm giá / in hóa đơn / lưu doanh thu nối vào đây sau.
-        private void Checkout()
+        // Mở màn hình Thanh toán (ưu đãi, tiền mặt / PayPal, in hóa đơn)
+        private void OpenCheckout()
         {
-            if (SelectedTable == null) return;
-            var ok = MessageBox.Show($"Thanh toán {SelectedTable.Name}\nTổng tiền: {Total:N0} đ",
-                                     "Thanh toán", MessageBoxButton.OKCancel, MessageBoxImage.Information);
-            if (ok != MessageBoxResult.OK) return;
+            if (SelectedTable == null || Items.Count == 0) return;
+            var table = SelectedTable;
 
-            _service.CheckoutTable(SelectedTable.TableId);
-            SetTableStatus(SelectedTable, TableStatus.Empty);
-            Items.Clear();
+            var vm = new CheckoutViewModel(table, Items.ToList());
+            var window = new Views.CheckoutWindow { DataContext = vm, Owner = Application.Current.MainWindow };
+            if (window.ShowDialog() != true || vm.Result == null) return;
+
+            // Thanh toán xong: bàn về Trống
+            table.Status = TableStatus.Empty;
+            if (SelectedTable == table) Items.Clear();
             RefreshSummary();
+            AppServices.NotifyInvoicesChanged();
         }
 
         // ===== Hàm phụ =====

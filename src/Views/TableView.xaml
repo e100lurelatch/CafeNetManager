@@ -146,8 +146,10 @@
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                         <Button Content="Đặt trước / Hủy đặt" Style="{StaticResource ActionButton}"
                                 Background="{StaticResource ReservedBrush}" Command="{Binding ReserveCommand}"/>
-                        <Button Content="Thanh toán" Style="{StaticResource ActionButton}" Margin="0"
-                                Background="{StaticResource EmptyBrush}" Command="{Binding CheckoutCommand}"/>
+                        <Button Content="💳 Thanh toán" Style="{StaticResource ActionButton}" Margin="0"
+                                Background="{StaticResource EmptyBrush}" FontWeight="Bold"
+                                ToolTip="Áp mã ưu đãi, thanh toán Tiền mặt hoặc PayPal, in hóa đơn"
+                                Command="{Binding CheckoutCommand}"/>
                     </StackPanel>
                 </StackPanel>
 
