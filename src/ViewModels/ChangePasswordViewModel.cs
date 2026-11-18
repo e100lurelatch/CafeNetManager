@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-
 namespace CafeNetManager.ViewModels
 {
     public class ChangePasswordViewModel : ViewModelBase
     {
-        public string KiemTraMatKhau(
-            string matKhauCu,
-            string matKhauMoi,
-            string xacNhan)
+        // Chỉ kiểm tra dữ liệu nhập. Không xác thực mật khẩu cũ hoặc ghi SQL.
+        public string KiemTraMatKhau(string matKhauCu, string matKhauMoi, string xacNhan)
         {
             if (string.IsNullOrWhiteSpace(matKhauCu) ||
                 string.IsNullOrWhiteSpace(matKhauMoi) ||
@@ -23,8 +16,10 @@ namespace CafeNetManager.ViewModels
             if (matKhauMoi != xacNhan)
                 return "Mật khẩu xác nhận không khớp!";
 
+            if (matKhauMoi == matKhauCu)
+                return "Mật khẩu mới phải khác mật khẩu cũ!";
+
             return "";
         }
     }
 }
-

@@ -1,11 +1,19 @@
-﻿using System.Windows;
 using System.Text.RegularExpressions;
+using System.Windows;
 using System.Windows.Input;
 
 namespace CafeNetManager.ViewModels
 {
     public class AccountViewModel : ViewModelBase
     {
+        // Dữ liệu mẫu. Chưa có bảng tài khoản và phiên đăng nhập thực tế.
+        private string _username = "Admin";
+        public string Username
+        {
+            get => _username;
+            private set => SetProperty(ref _username, value);
+        }
+
         private string _hoTen = "";
         public string HoTen
         {
@@ -31,10 +39,10 @@ namespace CafeNetManager.ViewModels
         public string VaiTro
         {
             get => _vaiTro;
-            set => SetProperty(ref _vaiTro, value);
+            private set => SetProperty(ref _vaiTro, value);
         }
 
-        private bool _dangChinhSua = false;
+        private bool _dangChinhSua;
         public bool DangChinhSua
         {
             get => _dangChinhSua;
@@ -51,6 +59,7 @@ namespace CafeNetManager.ViewModels
 
         public AccountViewModel()
         {
+            Username = "Admin";
             HoTen = "Nguyễn Văn A";
             Email = "admin@gmail.com";
             SoDienThoai = "0912345678";
@@ -68,10 +77,8 @@ namespace CafeNetManager.ViewModels
             hoTenCu = HoTen;
             emailCu = Email;
             soDienThoaiCu = SoDienThoai;
-
             DangChinhSua = true;
         }
-
 
         private void Luu()
         {
@@ -95,10 +102,10 @@ namespace CafeNetManager.ViewModels
                 return;
             }
 
+            // Chỉ lưu trong ViewModel; chưa ghi vào SQL Server.
             DangChinhSua = false;
-            MessageBox.Show("Cập nhật thông tin thành công!");
+            MessageBox.Show("Đã lưu thông tin trong bản demo. Chưa cập nhật SQL Server.");
         }
-
 
         private void Huy()
         {
@@ -107,7 +114,6 @@ namespace CafeNetManager.ViewModels
             HoTen = hoTenCu;
             Email = emailCu;
             SoDienThoai = soDienThoaiCu;
-
             DangChinhSua = false;
         }
     }
