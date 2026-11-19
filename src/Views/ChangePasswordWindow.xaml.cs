@@ -1,12 +1,15 @@
 ﻿
+using System;
 using System.Windows;
+using CafeNetManager.Services;
 using CafeNetManager.ViewModels;
 
 namespace CafeNetManager.Views
 {
     public partial class ChangePasswordWindow : Window
     {
-        ChangePasswordViewModel viewModel = new ChangePasswordViewModel();
+        private readonly ChangePasswordViewModel viewModel = new ChangePasswordViewModel();
+        private readonly AccountService accountService = new AccountService();
 
         public ChangePasswordWindow()
         {
@@ -26,7 +29,33 @@ namespace CafeNetManager.Views
                 return;
             }
 
-            MessageBox.Show("Thông tin hợp lệ! Chưa cập nhật mật khẩu thật.");
+            if (UserSession.CurrentUser == null)
+            {
+                MessageBox.Show("Vui lòng đăng nhập lại!");
+                return;
+            }
+
+            try
+            {
+                bool thanhCong = accountService.DoiMatKhau(
+                    UserSession.CurrentUser.UserId,
+                    pbMatKhauCu.Password,
+                    pbMatKhauMoi.Password);
+
+                if (thanhCong)
+                {
+                    MessageBox.Show("Đổi mật khẩu thành công!");
+                    DialogResult = true;
+                }
+                else
+                {
+                    MessageBox.Show("Mật khẩu cũ không đúng hoặc tài khoản không còn hoạt động!");
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Không thể đổi mật khẩu. Vui lòng kiểm tra kết nối SQL Server!");
+            }
         }
 
         private void btnHuy_Click(object sender, RoutedEventArgs e)

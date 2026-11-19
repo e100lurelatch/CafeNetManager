@@ -1,11 +1,28 @@
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
+using CafeNetManager.Models;
+using CafeNetManager.Services;
 
 namespace CafeNetManager.ViewModels
 {
     public class AccountViewModel : ViewModelBase
     {
+
+        private readonly AccountService accountService = new AccountService();
+        private int? userId = null;
+
+        public void NapTaiKhoan(AccountProfile taiKhoan)
+        {
+            userId = taiKhoan.UserId;
+            Username = taiKhoan.Username;
+            HoTen = taiKhoan.FullName;
+            Email = taiKhoan.Email;
+            SoDienThoai = taiKhoan.Phone;
+            VaiTro = taiKhoan.Role;
+        }
+
+
         // Dữ liệu mẫu. Chưa có bảng tài khoản và phiên đăng nhập thực tế.
         private string _username = "Admin";
         public string Username
@@ -103,8 +120,34 @@ namespace CafeNetManager.ViewModels
             }
 
             // Chỉ lưu trong ViewModel; chưa ghi vào SQL Server.
-            DangChinhSua = false;
-            MessageBox.Show("Đã lưu thông tin trong bản demo. Chưa cập nhật SQL Server.");
+
+            if (userId == null)
+            {
+                DangChinhSua = false;
+                MessageBox.Show("Đã lưu trong bản demo, chưa cập nhật SQL.");
+                return;
+            }
+
+            try
+            {
+                bool thanhCong = accountService.CapNhatThongTin(
+                    userId.Value, HoTen, Email, SoDienThoai);
+
+                if (thanhCong)
+                {
+                    DangChinhSua = false;
+                    MessageBox.Show("Cập nhật thông tin thành công!");
+                }
+                else
+                {
+                    MessageBox.Show("Không tìm thấy tài khoản để cập nhật!");
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Không thể cập nhật thông tin vào SQL Server!");
+            }
+
         }
 
         private void Huy()
