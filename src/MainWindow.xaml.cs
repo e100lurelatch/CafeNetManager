@@ -1,13 +1,7 @@
-﻿using System.Text;
+﻿using System;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using CafeNetManager.ViewModels;
+using CafeNetManager.Views;
 
 namespace CafeNetManager
 {
@@ -16,9 +10,30 @@ namespace CafeNetManager
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly MainViewModel _viewModel;
+
         public MainWindow()
         {
             InitializeComponent();
+
+            _viewModel = new MainViewModel();
+            _viewModel.LogoutRequested += OnLogoutRequested;
+            DataContext = _viewModel;
+        }
+
+        private void OnLogoutRequested()
+        {
+            // Mở LoginView trước khi đóng MainWindow để tránh ứng dụng tự tắt (OnLastWindowClose)
+            var loginView = new LoginView();
+            Application.Current.MainWindow = loginView;
+            loginView.Show();
+            Close();
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            _viewModel.LogoutRequested -= OnLogoutRequested;
+            base.OnClosed(e);
         }
     }
 }
