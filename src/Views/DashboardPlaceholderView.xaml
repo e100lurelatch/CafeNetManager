@@ -1,0 +1,63 @@
+<UserControl x:Class="CafeNetManager.Views.DashboardPlaceholderView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignHeight="520" d:DesignWidth="820"
+             Background="Transparent"
+             FontFamily="Segoe UI">
+    <Grid>
+        <Border MaxWidth="460"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Background="#1E1E1E"
+                BorderBrush="#2C2C2C"
+                BorderThickness="1"
+                CornerRadius="8"
+                Padding="40,34">
+            <StackPanel HorizontalAlignment="Center">
+                <Border Width="52"
+                        Height="52"
+                        CornerRadius="8"
+                        Background="#262118"
+                        BorderBrush="#3E321E"
+                        BorderThickness="1"
+                        HorizontalAlignment="Center">
+                    <TextBlock x:Name="txtIcon"
+                               Text="&#xE80F;"
+                               FontFamily="Segoe MDL2 Assets"
+                               FontSize="22"
+                               Foreground="#E0A844"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"/>
+                </Border>
+
+                <TextBlock x:Name="txtModuleName"
+                           Text="Module chức năng"
+                           FontSize="18"
+                           FontWeight="SemiBold"
+                           Foreground="#FFFFFF"
+                           Margin="0,18,0,6"
+                           TextAlignment="Center"
+                           TextWrapping="Wrap"/>
+
+                <TextBlock x:Name="txtStatus"
+                           Text="Đang chờ tích hợp module"
+                           FontSize="13.5"
+                           FontWeight="Medium"
+                           Foreground="#C88A2B"
+                           TextAlignment="Center"/>
+
+                <TextBlock x:Name="txtDescription"
+                           Text="Giao diện và nghiệp vụ của module này sẽ được tích hợp trong giai đoạn tiếp theo."
+                           FontSize="12.5"
+                           Foreground="#888888"
+                           TextAlignment="Center"
+                           TextWrapping="Wrap"
+                           LineHeight="19"
+                           Margin="0,10,0,0"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>
