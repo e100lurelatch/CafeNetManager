@@ -1,5 +1,6 @@
 using System;
 using System.Windows.Input;
+using CafeNetManager.Services;
 using CafeNetManager.Views;
 
 namespace CafeNetManager.ViewModels
@@ -80,17 +81,30 @@ namespace CafeNetManager.ViewModels
 
         public MainViewModel()
         {
-            // Services/UserSession.cs chưa có trên nhánh này nên dùng giá trị mặc định.
-            // Sau khi nhóm merge Services/UserSession.cs, có thể đọc trực tiếp:
-            // _currentUserName = Services.UserSession.CurrentUser?.Username ?? "Admin";
-            // _currentUserRole = string.IsNullOrWhiteSpace(Services.UserSession.CurrentUser?.Role)
-            //     ? "Quản trị viên"
-            //     : Services.UserSession.CurrentUser.Role;
-            _currentUserName = "Admin";
-            _currentUserRole = "Quản trị viên";
+            var currentUser = UserSession.CurrentUser;
+            if (currentUser != null && !string.IsNullOrWhiteSpace(currentUser.FullName))
+            {
+                _currentUserName = currentUser.FullName;
+            }
+            else if (currentUser != null && !string.IsNullOrWhiteSpace(currentUser.Username))
+            {
+                _currentUserName = currentUser.Username;
+            }
+            else
+            {
+                _currentUserName = "Admin";
+            }
+
+            _currentUserRole = currentUser != null && !string.IsNullOrWhiteSpace(currentUser.Role)
+                ? currentUser.Role
+                : "Quản trị viên";
 
             NavigateCommand = new RelayCommand(param => Navigate(param?.ToString() ?? "Dashboard"));
-            LogoutCommand = new RelayCommand(_ => LogoutRequested?.Invoke());
+            LogoutCommand = new RelayCommand(_ =>
+            {
+                UserSession.CurrentUser = null;
+                LogoutRequested?.Invoke();
+            });
 
             // Mặc định mở mục "Tổng quan" khi khởi tạo MainWindow
             Navigate("Dashboard");
@@ -149,11 +163,7 @@ namespace CafeNetManager.ViewModels
                 case "Account":
                     CurrentTitle = "Thông tin tài khoản";
                     CurrentSubtitle = "Quản lý hồ sơ người dùng và bảo mật tài khoản";
-                    // TODO: Thay Placeholder bằng View thật: CurrentView = new AccountView();
-                    CurrentView = new DashboardPlaceholderView(
-                        "Thông tin tài khoản",
-                        "\uE77B",
-                        "Cập nhật thông tin cá nhân, vai trò và đổi mật khẩu đăng nhập.");
+                    CurrentView = new AccountView();
                     break;
 
                 default:
